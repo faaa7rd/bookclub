@@ -1,0 +1,1848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Literary Haven - Virtual Book Club</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #3f292b;
+            background: linear-gradient(135deg, #c9f0ff 0%, #dde392 50%, #f6c28b 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #b27c66;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #b27c66;
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 80px;
+            padding: 2rem 0;
+        }
+
+        /* Welcome Section */
+        .welcome-section {
+            text-align: center;
+            padding: 4rem 0;
+            background: rgba(255, 255, 255, 0.9);
+            margin: 2rem 0;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .welcome-section h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #b27c66, #f6c28b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .welcome-section p {
+            font-size: 1.3rem;
+            color: #666;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Featured Book Section */
+        .featured-book {
+            background: rgba(255, 255, 255, 0.95);
+            margin: 2rem 0;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #333;
+        }
+
+        .book-content {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        .book-cover {
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .book-cover:hover {
+            transform: scale(1.05);
+        }
+
+        .book-info h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .book-author {
+            font-size: 1.2rem;
+            color: #b27c66;
+            margin-bottom: 1rem;
+        }
+
+        .book-summary {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            color: #555;
+        }
+
+        .reasons-to-read {
+            background: linear-gradient(135deg, #dde392 0%, #f6c28b 100%);
+            padding: 2rem;
+            border-radius: 15px;
+            color: #3f292b;
+        }
+
+        .reasons-to-read h4 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .reasons-list {
+            list-style: none;
+        }
+
+        .reasons-list li {
+            padding: 0.5rem 0;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .reasons-list li::before {
+            content: "📚";
+            position: absolute;
+            left: 0;
+        }
+
+        /* Events Section */
+        .events-section {
+            background: rgba(255, 255, 255, 0.95);
+            margin: 2rem 0;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .event-card {
+            background: linear-gradient(135deg, #b27c66 0%, #f6c28b 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .event-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .event-date {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 0.5rem;
+        }
+
+        .event-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+
+        .event-description {
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Member Spotlight Section */
+        .member-spotlight {
+            background: rgba(255, 255, 255, 0.95);
+            margin: 2rem 0;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .members-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .member-card {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+            border-left: 5px solid #b27c66;
+            transition: transform 0.3s ease;
+        }
+
+        .member-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .member-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .member-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #b27c66, #f6c28b);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-right: 1rem;
+        }
+
+        .member-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .member-review {
+            font-style: italic;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .review-rating {
+            margin-top: 1rem;
+        }
+
+        .stars {
+            color: #ffc107;
+            font-size: 1.2rem;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(255, 255, 255, 0.95);
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            border-radius: 20px 20px 0 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .welcome-section h1 {
+                font-size: 2.5rem;
+            }
+
+            .book-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .events-grid,
+            .members-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animation Classes */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Book Recommendations Styles */
+        .recommendations-section {
+            background: rgba(255, 255, 255, 0.95);
+            margin: 2rem 0;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .recommendation-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .tab-button {
+            background: #f8f9fa;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            color: #333;
+        }
+
+        .tab-button.active {
+            background: linear-gradient(135deg, #b27c66, #f6c28b);
+            color: white;
+        }
+
+        .tab-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .book-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            text-align: center;
+        }
+
+        .book-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .book-card img {
+            width: 150px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .book-card h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .book-card .author {
+            color: #b27c66;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .book-card .rating {
+            color: #ffc107;
+            margin-bottom: 1rem;
+        }
+
+        .book-card .genre-tag {
+            background: #e9ecef;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            color: #666;
+            display: inline-block;
+        }
+
+        /* Community Features */
+        .forums-section {
+            background: rgba(255, 255, 255, 0.95);
+            margin: 2rem 0;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .forum-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .forum-category {
+            background: linear-gradient(135deg, #dde392 0%, #f6c28b 100%);
+            color: #3f292b;
+            padding: 2rem;
+            border-radius: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .forum-category:hover {
+            transform: translateY(-3px);
+        }
+
+        .forum-category h3 {
+            margin-bottom: 1rem;
+        }
+
+        .forum-category p {
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        .forum-stats {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+        }
+
+        /* Live Chat */
+        .chat-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 350px;
+            height: 500px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            display: none;
+            flex-direction: column;
+            z-index: 1000;
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, #b27c66, #f6c28b);
+            color: white;
+            padding: 1rem;
+            border-radius: 15px 15px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            max-height: 350px;
+        }
+
+        .chat-input {
+            padding: 1rem;
+            border-top: 1px solid #eee;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            outline: none;
+        }
+
+        .chat-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #b27c66, #f6c28b);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .chat-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        /* Event Calendar */
+        .calendar-section {
+            background: rgba(255, 255, 255, 0.95);
+            margin: 2rem 0;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 1px;
+            background: #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 2rem;
+        }
+
+        .calendar-day {
+            background: white;
+            padding: 1rem;
+            min-height: 80px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .calendar-day.has-event {
+            background: linear-gradient(135deg, #b27c66, #f6c28b);
+            color: white;
+        }
+
+        .calendar-day-header {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 1px;
+            background: #333;
+            color: white;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .calendar-day-header div {
+            padding: 1rem;
+        }
+
+        .event-indicator {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 8px;
+            height: 8px;
+            background: #ff6b6b;
+            border-radius: 50%;
+        }
+
+        /* RSVP System */
+        .rsvp-section {
+            background: rgba(255, 255, 255, 0.95);
+            margin: 2rem 0;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .rsvp-form {
+            max-width: 500px;
+            margin: 2rem auto;
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #b27c66, #f6c28b);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: transform 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Member Profiles */
+        .profile-section {
+            background: rgba(255, 255, 255, 0.95);
+            margin: 2rem 0;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-card {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        .profile-avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #b27c66, #f6c28b);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+            font-weight: bold;
+        }
+
+        .profile-info h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .profile-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #b27c66;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Book Clubs */
+        .book-clubs-section {
+            background: rgba(255, 255, 255, 0.95);
+            margin: 2rem 0;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .clubs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .club-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            border-left: 5px solid #b27c66;
+        }
+
+        .club-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .club-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .club-name {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .club-members {
+            background: #b27c66;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+        }
+
+        .club-description {
+            color: #666;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .club-genres {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .genre-tag {
+            background: #e9ecef;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .join-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.3s ease;
+        }
+
+        .join-btn:hover {
+            background: #218838;
+        }
+
+        /* Event Recaps */
+        .recaps-section {
+            background: rgba(255, 255, 255, 0.95);
+            margin: 2rem 0;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .recap-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid #b27c66;
+        }
+
+        .recap-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .recap-date {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .recap-content {
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .recap-highlights {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+        }
+
+        .recap-highlights h4 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .recap-highlights ul {
+            margin-left: 1.5rem;
+        }
+
+        .recap-highlights li {
+            margin-bottom: 0.3rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <a href="#" class="logo">📚 Literary Haven</a>
+            <ul class="nav-links">
+                <li><a href="website.html">Home</a></li>
+                <li><a href="books.html">Books</a></li>
+                <li><a href="recommendations.html">Recommendations</a></li>
+                <li><a href="events.html">Events</a></li>
+                <li><a href="community.html">Community</a></li>
+                <li><a href="forums.html">Forums</a></li>
+                <li><a href="profile.html">Profile</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Welcome Section -->
+        <section id="home" class="welcome-section fade-in">
+            <div class="container">
+                <h1>Welcome to Literary Haven</h1>
+                <p>Join our vibrant community of book lovers! Discover new reads, share your thoughts, and connect with fellow bibliophiles from around the world. Whether you're into classics, contemporary fiction, or niche genres, there's a place for every reader here.</p>
+            </div>
+        </section>
+
+        <!-- Featured Book of the Month -->
+        <section class="featured-book fade-in">
+            <div class="container">
+                <h2 class="section-title">📖 Book of the Month</h2>
+                <div class="book-content">
+                    <img src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="The Midnight Library" class="book-cover">
+                    <div class="book-info">
+                        <h3>The Midnight Library</h3>
+                        <p class="book-author">by Matt Haig</p>
+                        <p class="book-summary">
+                            Between life and death there is a library, and within that library, the shelves go on forever. Every book provides a chance to try another life you could have lived. To see how things would be if you had made other choices... Would you have done anything different, if you had the chance to undo your regrets?
+                        </p>
+                        <div class="reasons-to-read">
+                            <h4>Why You Should Read This:</h4>
+                            <ul class="reasons-list">
+                                <li>Thought-provoking exploration of life choices and regrets</li>
+                                <li>Beautiful blend of philosophy and fiction</li>
+                                <li>Perfect for book club discussions</li>
+                                <li>Uplifting message about appreciating life</li>
+                                <li>Matt Haig's signature warmth and wisdom</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Upcoming Events -->
+        <section id="events" class="events-section fade-in">
+            <div class="container">
+                <h2 class="section-title">🗓️ Upcoming Virtual Events</h2>
+                <div class="events-grid">
+                    <div class="event-card">
+                        <div class="event-date">December 15, 2024 - 7:00 PM EST</div>
+                        <h3 class="event-title">Monthly Book Discussion</h3>
+                        <p class="event-description">Join us for our lively discussion of "The Midnight Library". We'll explore themes of regret, choice, and finding meaning in life. Perfect for both first-time readers and those revisiting this beautiful novel.</p>
+                    </div>
+                    <div class="event-card">
+                        <div class="event-date">December 20, 2024 - 6:30 PM EST</div>
+                        <h3 class="event-title">Author Q&A Session</h3>
+                        <p class="event-description">Special guest appearance by debut author Sarah Chen to discuss her new thriller "Silent Echoes". Get your questions ready for this exclusive virtual meet-and-greet!</p>
+                    </div>
+                    <div class="event-card">
+                        <div class="event-date">December 28, 2024 - 8:00 PM EST</div>
+                        <h3 class="event-title">New Year Reading Goals</h3>
+                        <p class="event-description">Share your reading goals for 2025 and get inspired by others' book recommendations. We'll also announce our January book selection!</p>
+                    </div>
+                    <div class="event-card">
+                        <div class="event-date">January 5, 2025 - 7:30 PM EST</div>
+                        <h3 class="event-title">Genre Spotlight: Sci-Fi</h3>
+                        <p class="event-description">Dive deep into the world of science fiction with our community's favorite picks. From classic Asimov to contemporary masters, discover your next great read.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Member Spotlight -->
+        <section id="community" class="member-spotlight fade-in">
+            <div class="container">
+                <h2 class="section-title">⭐ Community Spotlight</h2>
+                <div class="members-grid">
+                    <div class="member-card">
+                        <div class="member-info">
+                            <div class="member-avatar">AJ</div>
+                            <div class="member-name">Alex Johnson</div>
+                        </div>
+                        <div class="member-review">
+                            "Just finished 'Project Hail Mary' and I'm still reeling! The perfect blend of hard science and heart. Andy Weir has done it again - this might be even better than The Martian. The audiobook narration is phenomenal too!"
+                        </div>
+                        <div class="review-rating">
+                            <span class="stars">★★★★★</span>
+                            <span style="margin-left: 10px; color: #666;">5/5 stars</span>
+                        </div>
+                    </div>
+                    <div class="member-card">
+                        <div class="member-info">
+                            <div class="member-avatar">SM</div>
+                            <div class="member-name">Sarah Martinez</div>
+                        </div>
+                        <div class="member-review">
+                            "I've been a member for two years now and this community has completely transformed my reading life. The monthly picks always challenge my perspective. Currently loving 'The Seven Husbands of Evelyn Hugo' - what a ride!"
+                        </div>
+                        <div class="review-rating">
+                            <span class="stars">★★★★★</span>
+                            <span style="margin-left: 10px; color: #666;">5/5 stars</span>
+                        </div>
+                    </div>
+                    <div class="member-card">
+                        <div class="member-info">
+                            <div class="member-avatar">DC</div>
+                            <div class="member-name">David Chen</div>
+                        </div>
+                        <div class="member-review">
+                            "Finally tackled 'Dune' thanks to this book club! Was intimidated by its reputation, but the group discussions made it so much more accessible. Now I'm hooked on the series. Can't wait for the next discussion!"
+                        </div>
+                        <div class="review-rating">
+                            <span class="stars">★★★★☆</span>
+                            <span style="margin-left: 10px; color: #666;">4/5 stars</span>
+                        </div>
+                    </div>
+                    <div class="member-card">
+                        <div class="member-info">
+                            <div class="member-avatar">EM</div>
+                            <div class="member-name">Emma Wilson</div>
+                        </div>
+                        <div class="member-review">
+                            "As a busy mom, I thought I'd never have time for book clubs. But the virtual format is perfect! I can participate from anywhere. The community is so welcoming and diverse - I've discovered genres I never would have tried."
+                        </div>
+                        <div class="review-rating">
+                            <span class="stars">★★★★★</span>
+                            <span style="margin-left: 10px; color: #666;">5/5 stars</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Book Recommendations Section -->
+        <section id="recommendations" class="recommendations-section fade-in">
+            <div class="container">
+                <h2 class="section-title">📚 Book Recommendations</h2>
+                <div class="recommendation-tabs">
+                    <button class="tab-button active" onclick="showTab('curated')">Curated Lists</button>
+                    <button class="tab-button" onclick="showTab('user-rec')">User Recommendations</button>
+                    <button class="tab-button" onclick="showTab('personalized')">Personalized</button>
+                    <button class="tab-button" onclick="showTab('trending')">Trending</button>
+                </div>
+
+                <!-- Curated Lists Tab -->
+                <div id="curated" class="tab-content active">
+                    <div class="books-grid">
+                        <div class="book-card">
+                            <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="The Seven Husbands of Evelyn Hugo">
+                            <h4>The Seven Husbands of Evelyn Hugo</h4>
+                            <p class="author">by Taylor Jenkins Reid</p>
+                            <div class="rating">★★★★★</div>
+                            <span class="genre-tag">Historical Fiction</span>
+                        </div>
+                        <div class="book-card">
+                            <img src="https://images.unsplash.com/photo-1543002588-bfa74002ed7e?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Klara and the Sun">
+                            <h4>Klara and the Sun</h4>
+                            <p class="author">by Kazuo Ishiguro</p>
+                            <div class="rating">★★★★☆</div>
+                            <span class="genre-tag">Science Fiction</span>
+                        </div>
+                        <div class="book-card">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Project Hail Mary">
+                            <h4>Project Hail Mary</h4>
+                            <p class="author">by Andy Weir</p>
+                            <div class="rating">★★★★★</div>
+                            <span class="genre-tag">Sci-Fi Thriller</span>
+                        </div>
+                        <div class="book-card">
+                            <img src="https://images.unsplash.com/photo-1512820790803-83ca734da794?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="The Song of Achilles">
+                            <h4>The Song of Achilles</h4>
+                            <p class="author">by Madeline Miller</p>
+                            <div class="rating">★★★★★</div>
+                            <span class="genre-tag">Mythology</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- User Recommendations Tab -->
+                <div id="user-rec" class="tab-content">
+                    <div class="books-grid">
+                        <div class="book-card">
+                            <img src="https://images.unsplash.com/photo-1589998059171-988d887df646?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="The Invisible Life of Addie LaRue">
+                            <h4>The Invisible Life of Addie LaRue</h4>
+                            <p class="author">by V.E. Schwab</p>
+                            <div class="rating">★★★★★</div>
+                            <span class="genre-tag">Fantasy</span>
+                        </div>
+                        <div class="book-card">
+                            <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Circe">
+                            <h4>Circe</h4>
+                            <p class="author">by Madeline Miller</p>
+                            <div class="rating">★★★★★</div>
+                            <span class="genre-tag">Mythology</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Personalized Tab -->
+                <div id="personalized" class="tab-content">
+                    <p style="text-align: center; font-size: 1.2rem; color: #666; margin: 2rem 0;">
+                        Based on your reading history, we recommend these books for you!
+                    </p>
+                    <div class="books-grid">
+                        <div class="book-card">
+                            <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="The House in the Cerulean Sea">
+                            <h4>The House in the Cerulean Sea</h4>
+                            <p class="author">by TJ Klune</p>
+                            <div class="rating">★★★★★</div>
+                            <span class="genre-tag">Fantasy</span>
+                        </div>
+                        <div class="book-card">
+                            <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Piranesi">
+                            <h4>Piranesi</h4>
+                            <p class="author">by Susanna Clarke</p>
+                            <div class="rating">★★★★☆</div>
+                            <span class="genre-tag">Fantasy</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Trending Tab -->
+                <div id="trending" class="tab-content">
+                    <div class="books-grid">
+                        <div class="book-card">
+                            <img src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="The Midnight Library">
+                            <h4>The Midnight Library</h4>
+                            <p class="author">by Matt Haig</p>
+                            <div class="rating">★★★★☆</div>
+                            <span class="genre-tag">Contemporary Fiction</span>
+                        </div>
+                        <div class="book-card">
+                            <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="The Seven Husbands of Evelyn Hugo">
+                            <h4>The Seven Husbands of Evelyn Hugo</h4>
+                            <p class="author">by Taylor Jenkins Reid</p>
+                            <div class="rating">★★★★★</div>
+                            <span class="genre-tag">Historical Fiction</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Discussion Forums Section -->
+        <section id="forums" class="forums-section fade-in">
+            <div class="container">
+                <h2 class="section-title">💬 Discussion Forums</h2>
+                <div class="forum-categories">
+                    <div class="forum-category">
+                        <h3>📖 General Book Talk</h3>
+                        <p>Share your thoughts on any book, get recommendations, and discuss your latest reads.</p>
+                        <div class="forum-stats">
+                            <span>1,247 Topics</span>
+                            <span>8,934 Posts</span>
+                        </div>
+                    </div>
+                    <div class="forum-category">
+                        <h3>🎭 Genre Discussions</h3>
+                        <p>Deep dive into specific genres like fantasy, sci-fi, romance, mystery, and more.</p>
+                        <div class="forum-stats">
+                            <span>892 Topics</span>
+                            <span>5,672 Posts</span>
+                        </div>
+                    </div>
+                    <div class="forum-category">
+                        <h3>📚 Monthly Book Club</h3>
+                        <p>Official discussions for our monthly book selections and related themes.</p>
+                        <div class="forum-stats">
+                            <span>156 Topics</span>
+                            <span>2,341 Posts</span>
+                        </div>
+                    </div>
+                    <div class="forum-category">
+                        <h3>✍️ Author Spotlights</h3>
+                        <p>Discuss your favorite authors, their works, and upcoming releases.</p>
+                        <div class="forum-stats">
+                            <span>423 Topics</span>
+                            <span>1,789 Posts</span>
+                        </div>
+                    </div>
+                    <div class="forum-category">
+                        <h3>🏆 Book Awards & Lists</h3>
+                        <p>Talk about award-winning books, bestseller lists, and literary achievements.</p>
+                        <div class="forum-stats">
+                            <span>234 Topics</span>
+                            <span>987 Posts</span>
+                        </div>
+                    </div>
+                    <div class="forum-category">
+                        <h3>📝 Writing & Publishing</h3>
+                        <p>For aspiring writers and those interested in the publishing world.</p>
+                        <div class="forum-stats">
+                            <span>567 Topics</span>
+                            <span>3,421 Posts</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Member Profiles Section -->
+        <section id="profile" class="profile-section fade-in">
+            <div class="container">
+                <h2 class="section-title">👤 Your Profile</h2>
+                <div class="profile-card">
+                    <div class="profile-avatar">AJ</div>
+                    <div class="profile-info">
+                        <h3>Alex Johnson</h3>
+                        <p style="color: #666; margin-bottom: 1rem;">Member since January 2023</p>
+                        <p>Passionate reader of science fiction and fantasy. Always looking for the next great adventure!</p>
+                        
+                        <div class="profile-stats">
+                            <div class="stat-card">
+                                <div class="stat-number">47</div>
+                                <div class="stat-label">Books Read</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number">23</div>
+                                <div class="stat-label">Reviews Written</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number">156</div>
+                                <div class="stat-label">Forum Posts</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number">12</div>
+                                <div class="stat-label">Events Attended</div>
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 2rem;">
+                            <h4 style="color: #3f292b; margin-bottom: 1rem;">Favorite Genres:</h4>
+                            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                                <span class="genre-tag">Science Fiction</span>
+                                <span class="genre-tag">Fantasy</span>
+                                <span class="genre-tag">Mystery</span>
+                                <span class="genre-tag">Thriller</span>
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 2rem;">
+                            <h4 style="color: #3f292b; margin-bottom: 1rem;">Currently Reading:</h4>
+                            <p style="color: #666; font-style: italic;">"The House in the Cerulean Sea" by TJ Klune</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Book Clubs & Groups Section -->
+        <section class="book-clubs-section fade-in">
+            <div class="container">
+                <h2 class="section-title">📚 Book Clubs & Groups</h2>
+                <div class="clubs-grid">
+                    <div class="club-card">
+                        <div class="club-header">
+                            <h3 class="club-name">Sci-Fi Enthusiasts</h3>
+                            <span class="club-members">127 members</span>
+                        </div>
+                        <p class="club-description">A group for lovers of science fiction across all subgenres. We explore everything from hard sci-fi to space opera, discussing themes, world-building, and the future of humanity.</p>
+                        <div class="club-genres">
+                            <span class="genre-tag">Science Fiction</span>
+                            <span class="genre-tag">Space Opera</span>
+                            <span class="genre-tag">Dystopian</span>
+                        </div>
+                        <button class="join-btn">Join Club</button>
+                    </div>
+                    
+                    <div class="club-card">
+                        <div class="club-header">
+                            <h3 class="club-name">Fantasy Realm</h3>
+                            <span class="club-members">89 members</span>
+                        </div>
+                        <p class="club-description">Dive into magical worlds, epic quests, and fantastical creatures. From high fantasy to urban fantasy, we explore all realms of the imagination.</p>
+                        <div class="club-genres">
+                            <span class="genre-tag">Fantasy</span>
+                            <span class="genre-tag">High Fantasy</span>
+                            <span class="genre-tag">Urban Fantasy</span>
+                        </div>
+                        <button class="join-btn">Join Club</button>
+                    </div>
+                    
+                    <div class="club-card">
+                        <div class="club-header">
+                            <h3 class="club-name">Classic Literature</h3>
+                            <span class="club-members">156 members</span>
+                        </div>
+                        <p class="club-description">Exploring timeless works that have shaped literature. We read and discuss classics from different eras and cultures, discovering their lasting impact.</p>
+                        <div class="club-genres">
+                            <span class="genre-tag">Classics</span>
+                            <span class="genre-tag">Literary Fiction</span>
+                            <span class="genre-tag">Historical</span>
+                        </div>
+                        <button class="join-btn">Join Club</button>
+                    </div>
+                    
+                    <div class="club-card">
+                        <div class="club-header">
+                            <h3 class="club-name">Mystery & Thriller</h3>
+                            <span class="club-members">203 members</span>
+                        </div>
+                        <p class="club-description">For fans of suspense, mystery, and psychological thrillers. We love trying to solve the case before the protagonist does!</p>
+                        <div class="club-genres">
+                            <span class="genre-tag">Mystery</span>
+                            <span class="genre-tag">Thriller</span>
+                            <span class="genre-tag">Crime</span>
+                        </div>
+                        <button class="join-btn">Join Club</button>
+                    </div>
+                    
+                    <div class="club-card">
+                        <div class="club-header">
+                            <h3 class="club-name">Young Adult Readers</h3>
+                            <span class="club-members">178 members</span>
+                        </div>
+                        <p class="club-description">Celebrating the vibrant world of YA literature. From contemporary to fantasy, we explore stories that resonate with young hearts and minds.</p>
+                        <div class="club-genres">
+                            <span class="genre-tag">Young Adult</span>
+                            <span class="genre-tag">Contemporary</span>
+                            <span class="genre-tag">Coming of Age</span>
+                        </div>
+                        <button class="join-btn">Join Club</button>
+                    </div>
+                    
+                    <div class="club-card">
+                        <div class="club-header">
+                            <h3 class="club-name">Non-Fiction Explorers</h3>
+                            <span class="club-members">94 members</span>
+                        </div>
+                        <p class="club-description">Discovering the world through biographies, history, science, philosophy, and more. Learning never stops in this group!</p>
+                        <div class="club-genres">
+                            <span class="genre-tag">Biography</span>
+                            <span class="genre-tag">History</span>
+                            <span class="genre-tag">Science</span>
+                        </div>
+                        <button class="join-btn">Join Club</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Event Calendar Section -->
+        <section class="calendar-section fade-in">
+            <div class="container">
+                <h2 class="section-title">📅 Event Calendar</h2>
+                <div class="calendar-day-header">
+                    <div>Sun</div>
+                    <div>Mon</div>
+                    <div>Tue</div>
+                    <div>Wed</div>
+                    <div>Thu</div>
+                    <div>Fri</div>
+                    <div>Sat</div>
+                </div>
+                <div class="calendar-grid">
+                    <div class="calendar-day">1</div>
+                    <div class="calendar-day">2</div>
+                    <div class="calendar-day">3</div>
+                    <div class="calendar-day">4</div>
+                    <div class="calendar-day">5</div>
+                    <div class="calendar-day">6</div>
+                    <div class="calendar-day">7</div>
+                    <div class="calendar-day">8</div>
+                    <div class="calendar-day">9</div>
+                    <div class="calendar-day">10</div>
+                    <div class="calendar-day">11</div>
+                    <div class="calendar-day">12</div>
+                    <div class="calendar-day">13</div>
+                    <div class="calendar-day">14</div>
+                    <div class="calendar-day has-event">15<div class="event-indicator"></div></div>
+                    <div class="calendar-day">16</div>
+                    <div class="calendar-day">17</div>
+                    <div class="calendar-day">18</div>
+                    <div class="calendar-day">19</div>
+                    <div class="calendar-day has-event">20<div class="event-indicator"></div></div>
+                    <div class="calendar-day">21</div>
+                    <div class="calendar-day">22</div>
+                    <div class="calendar-day">23</div>
+                    <div class="calendar-day">24</div>
+                    <div class="calendar-day">25</div>
+                    <div class="calendar-day">26</div>
+                    <div class="calendar-day">27</div>
+                    <div class="calendar-day has-event">28<div class="event-indicator"></div></div>
+                    <div class="calendar-day">29</div>
+                    <div class="calendar-day">30</div>
+                    <div class="calendar-day">31</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RSVP Section -->
+        <section class="rsvp-section fade-in">
+            <div class="container">
+                <h2 class="section-title">🎫 RSVP for Events</h2>
+                <div class="rsvp-form">
+                    <form id="rsvpForm">
+                        <div class="form-group">
+                            <label for="event">Select Event:</label>
+                            <select id="event" required>
+                                <option value="">Choose an event...</option>
+                                <option value="monthly-discussion">Monthly Book Discussion - Dec 15</option>
+                                <option value="author-qa">Author Q&A Session - Dec 20</option>
+                                <option value="reading-goals">New Year Reading Goals - Dec 28</option>
+                                <option value="sci-fi-spotlight">Genre Spotlight: Sci-Fi - Jan 5</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Full Name:</label>
+                            <input type="text" id="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" id="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="attendance">Will you attend?</label>
+                            <select id="attendance" required>
+                                <option value="">Select...</option>
+                                <option value="yes">Yes, I'll be there!</option>
+                                <option value="maybe">Maybe</option>
+                                <option value="no">No, can't make it</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="comments">Comments or Questions:</label>
+                            <textarea id="comments" rows="3"></textarea>
+                        </div>
+                        <button type="submit" class="btn">Submit RSVP</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Event Recaps Section -->
+        <section class="recaps-section fade-in">
+            <div class="container">
+                <h2 class="section-title">📝 Event Recaps</h2>
+                <div class="recap-card">
+                    <div class="recap-header">
+                        <h3>November Book Discussion: "Klara and the Sun"</h3>
+                        <span class="recap-date">November 15, 2024</span>
+                    </div>
+                    <div class="recap-content">
+                        <p>Our November discussion of Kazuo Ishiguro's "Klara and the Sun" was a thought-provoking exploration of AI consciousness, love, and what it means to be human. The virtual meetup was attended by 45 members who shared diverse perspectives on Klara's unique viewpoint and the novel's themes.</p>
+                        <div class="recap-highlights">
+                            <h4>Key Discussion Points:</h4>
+                            <ul>
+                                <li>Klara's perspective on human emotions and relationships</li>
+                                <li>The symbolism of the sun throughout the novel</li>
+                                <li>Ishiguro's exploration of technology and humanity</li>
+                                <li>Comparisons to other AI narratives in literature</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="recap-card">
+                    <div class="recap-header">
+                        <h3>Author Q&A with Sarah Chen</h3>
+                        <span class="recap-date">October 25, 2024</span>
+                    </div>
+                    <div class="recap-content">
+                        <p>We had the privilege of hosting debut author Sarah Chen for an intimate Q&A session about her thriller "Silent Echoes." Members asked insightful questions about her writing process, research methods, and inspiration for the novel's complex characters.</p>
+                        <div class="recap-highlights">
+                            <h4>Highlights:</h4>
+                            <ul>
+                                <li>Sarah's journey from idea to publication (3 years!)</li>
+                                <li>Behind-the-scenes research on forensic psychology</li>
+                                <li>Upcoming projects and sequel possibilities</li>
+                                <li>Writing tips for aspiring thriller authors</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Live Chat -->
+    <button class="chat-toggle" onclick="toggleChat()">
+        <i class="fas fa-comments"></i>
+    </button>
+    
+    <div class="chat-container" id="chatContainer">
+        <div class="chat-header">
+            <h3>Live Chat</h3>
+            <button onclick="toggleChat()" style="background: none; border: none; color: white; font-size: 1.2rem;">×</button>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div style="padding: 1rem; text-align: center; color: #666;">
+                <p>Welcome to Literary Haven chat!</p>
+                <p>Share your thoughts, ask questions, or just say hello to fellow book lovers.</p>
+            </div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="chatInput" placeholder="Type your message..." onkeypress="handleChatKeyPress(event)">
+            <button onclick="sendMessage()" class="btn" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Send</button>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Literary Haven. Join our community and discover your next great read!</p>
+            <p style="margin-top: 1rem; color: #666;">Connect with us: 📧 hello@literaryhaven.com | 📱 @LiteraryHaven</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all fade-in elements
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Dynamic event countdown (optional enhancement)
+        function updateEventCountdown() {
+            const eventCards = document.querySelectorAll('.event-card');
+            eventCards.forEach(card => {
+                const dateElement = card.querySelector('.event-date');
+                if (dateElement) {
+                    const dateText = dateElement.textContent;
+                    // You could add countdown logic here
+                    console.log(`Event: ${dateText}`);
+                }
+            });
+        }
+
+        // Initialize countdown
+        updateEventCountdown();
+
+        // Add interactive book rating system (bonus feature)
+        function addRatingInteractivity() {
+            const memberCards = document.querySelectorAll('.member-card');
+            memberCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    this.style.transform = 'scale(1.02)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 200);
+                });
+            });
+        }
+
+        // Initialize rating interactivity
+        addRatingInteractivity();
+
+        // Simulate loading new member reviews (bonus feature)
+        function simulateNewReview() {
+            const reviews = [
+                "Just discovered this amazing book club! The community is so welcoming.",
+                "Love how diverse the book selections are. Always something new to discover.",
+                "The virtual discussions are so engaging. Made reading social again!",
+                "Best book club I've ever joined. Highly recommend to all book lovers!"
+            ];
+            
+            // This could be used to cycle through different reviews
+            console.log('New review simulation:', reviews[Math.floor(Math.random() * reviews.length)]);
+        }
+
+        // Simulate new review every 30 seconds (for demo purposes)
+        setInterval(simulateNewReview, 30000);
+
+        // Add keyboard navigation support
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                // Close any open modals or return to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        });
+
+        // Performance optimization: Lazy load images
+        function lazyLoadImages() {
+            const images = document.querySelectorAll('img[data-src]');
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.dataset.src;
+                        img.classList.remove('lazy');
+                        imageObserver.unobserve(img);
+                    }
+                });
+            });
+
+            images.forEach(img => imageObserver.observe(img));
+        }
+
+        // Initialize lazy loading
+        lazyLoadImages();
+
+        // Tab functionality for book recommendations
+        function showTab(tabId) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remove active class from all tab buttons
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active');
+            });
+            
+            // Show selected tab content
+            document.getElementById(tabId).classList.add('active');
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+        }
+
+        // Live chat functionality
+        function toggleChat() {
+            const chatContainer = document.getElementById('chatContainer');
+            if (chatContainer.style.display === 'flex') {
+                chatContainer.style.display = 'none';
+            } else {
+                chatContainer.style.display = 'flex';
+            }
+        }
+
+        function handleChatKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        function sendMessage() {
+            const chatInput = document.getElementById('chatInput');
+            const chatMessages = document.getElementById('chatMessages');
+            
+            if (chatInput.value.trim()) {
+                const messageDiv = document.createElement('div');
+                messageDiv.style.cssText = `
+                    background: #f8f9fa;
+                    padding: 0.8rem;
+                    margin: 0.5rem 0;
+                    border-radius: 15px;
+                    border-left: 3px solid #b27c66;
+                `;
+                messageDiv.innerHTML = `
+                    <strong style="color: #b27c66;">You:</strong> ${chatInput.value}
+                `;
+                chatMessages.appendChild(messageDiv);
+                chatInput.value = '';
+                
+                // Scroll to bottom
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+                
+                // Simulate response after a delay
+                setTimeout(() => {
+                    const responseDiv = document.createElement('div');
+                    responseDiv.style.cssText = `
+                        background: #e9ecef;
+                        padding: 0.8rem;
+                        margin: 0.5rem 0;
+                        border-radius: 15px;
+                        border-left: 3px solid #dde392;
+                    `;
+                    const responses = [
+                        "That sounds amazing! I'll have to add that to my reading list.",
+                        "Great choice! Have you read anything else by that author?",
+                        "I totally agree! The character development was incredible.",
+                        "That's one of my favorites too! What did you think of the ending?",
+                        "I'm currently reading that! Don't spoil it for me! 😄"
+                    ];
+                    const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+                    responseDiv.innerHTML = `
+                        <strong style="color: #dde392;">BookLover42:</strong> ${randomResponse}
+                    `;
+                    chatMessages.appendChild(responseDiv);
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }, 1000 + Math.random() * 2000);
+            }
+        }
+
+        // RSVP form functionality
+        document.getElementById('rsvpForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                event: document.getElementById('event').value,
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                attendance: document.getElementById('attendance').value,
+                comments: document.getElementById('comments').value
+            };
+            
+            // Simulate form submission
+            alert(`Thank you for your RSVP, ${formData.name}! You will receive a confirmation email shortly.`);
+            
+            // Reset form
+            this.reset();
+        });
+
+        // Book club join functionality
+        document.querySelectorAll('.join-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const clubName = this.closest('.club-card').querySelector('.club-name').textContent;
+                
+                if (this.textContent === 'Join Club') {
+                    this.textContent = 'Joined!';
+                    this.style.background = '#28a745';
+                    alert(`Welcome to ${clubName}! You'll receive updates about upcoming discussions.`);
+                } else {
+                    this.textContent = 'Join Club';
+                    this.style.background = '#28a745';
+                    alert(`You've left ${clubName}. You can rejoin anytime!`);
+                }
+            });
+        });
+
+        // Calendar day click functionality
+        document.querySelectorAll('.calendar-day.has-event').forEach(day => {
+            day.addEventListener('click', function() {
+                const dayNumber = this.textContent.trim();
+                const events = {
+                    '15': 'Monthly Book Discussion: "The Midnight Library" - 7:00 PM EST',
+                    '20': 'Author Q&A Session with Sarah Chen - 6:30 PM EST',
+                    '28': 'New Year Reading Goals Meetup - 8:00 PM EST'
+                };
+                
+                if (events[dayNumber]) {
+                    alert(`Event on December ${dayNumber}:\n\n${events[dayNumber]}\n\nClick the RSVP section to sign up!`);
+                }
+            });
+        });
+
+        // Forum category click functionality
+        document.querySelectorAll('.forum-category').forEach(category => {
+            category.addEventListener('click', function() {
+                const categoryName = this.querySelector('h3').textContent;
+                alert(`Welcome to ${categoryName}!\n\nThis would normally take you to the forum threads. In a full implementation, you'd see:\n\n• Recent discussions\n• Popular topics\n• Ability to start new threads\n• Search functionality\n\nJoin the conversation and share your thoughts!`);
+            });
+        });
+
+        // Book card interaction
+        document.querySelectorAll('.book-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const bookTitle = this.querySelector('h4').textContent;
+                const bookAuthor = this.querySelector('.author').textContent;
+                
+                alert(`Book Details: ${bookTitle}\n${bookAuthor}\n\nThis would normally show:\n• Full description\n• User reviews\n• Reading progress tracking\n• Add to reading list\n• Write a review\n\nWhat would you like to know about this book?`);
+            });
+        });
+
+        // Profile interaction
+        document.querySelector('.profile-avatar').addEventListener('click', function() {
+            alert('Profile Customization\n\nIn a full implementation, you could:\n• Upload a profile picture\n• Update reading preferences\n• Set reading goals\n• Manage privacy settings\n• View reading statistics\n• Export reading history');
+        });
+
+        // Enhanced scroll animations
+        const enhancedObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.6s ease forwards';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        // Add CSS animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Observe all new sections
+        document.querySelectorAll('.recommendations-section, .forums-section, .profile-section, .book-clubs-section, .calendar-section, .rsvp-section, .recaps-section').forEach(el => {
+            enhancedObserver.observe(el);
+        });
+
+        // Simulate real-time notifications
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 100px;
+                right: 20px;
+                background: ${type === 'success' ? '#dde392' : type === 'error' ? '#ff6b6b' : '#f6c28b'};
+                color: #3f292b;
+                padding: 1rem 2rem;
+                border-radius: 10px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+                z-index: 10000;
+                animation: slideInRight 0.3s ease;
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOutRight 0.3s ease';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // Add notification animations
+        const notificationStyle = document.createElement('style');
+        notificationStyle.textContent = `
+            @keyframes slideInRight {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOutRight {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(notificationStyle);
+
+        // Simulate periodic notifications
+        setTimeout(() => {
+            showNotification('📚 New book recommendation for you!', 'success');
+        }, 5000);
+
+        setTimeout(() => {
+            showNotification('💬 3 new messages in General Book Talk', 'info');
+        }, 15000);
+
+        console.log('📚 Literary Haven website loaded successfully!');
+        console.log('Welcome to our virtual book club community!');
+        console.log('✨ New features: Book recommendations, forums, profiles, book clubs, events, and live chat!');
+    </script>
+</body>
+</html>
